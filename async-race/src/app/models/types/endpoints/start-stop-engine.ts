@@ -1,13 +1,10 @@
-import type { CarStatus, EndpointType, Method } from '@ts-enums';
-import type { EngineResponse } from '@ts-interfaces';
+import type { EndpointType, Method } from '@ts-enums';
+import type { EngineResponse, EngineStartStopQuery } from '@ts-interfaces';
 
 export type StartStopEngineEndpoint = {
   method: Method.PATCH;
   path: [EndpointType.ENGINE];
   body: undefined;
-  query: {
-    id: number;
-    status: CarStatus.STARTED | CarStatus.STOPPED;
-  };
+  query: EngineStartStopQuery;
   response: EngineResponse;
 };

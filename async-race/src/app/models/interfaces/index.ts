@@ -1,6 +1,10 @@
 export type { CarRequest } from './car/car-request';
 export type { CarResponse } from './car/car-response';
+export type { CarsQuery } from './car/cars-query';
 export type { EngineDriveModeResponse } from './engine/engine-drive-mode-response';
+export type { EngineDriveQuery } from './engine/engine-drive-query';
 export type { EngineResponse } from './engine/engine-response';
+export type { EngineStartStopQuery } from './engine/engine-start-stop-query';
 export type { WinnerRequest } from './winner/winner-request';
 export type { WinnerResponse } from './winner/winner-response';
+export type { WinnersQuery } from './winner/winners-query';

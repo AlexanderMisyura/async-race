@@ -1,16 +1,11 @@
-import type { EndpointType, Method, WinnersSortParameter } from '@ts-enums';
-import type { WinnerResponse } from '@ts-interfaces';
+import type { EndpointType, Method } from '@ts-enums';
+import type { WinnerResponse, WinnersQuery } from '@ts-interfaces';
 
 export type GetWinnersEndpoint = {
   method: Method.GET;
   path: [EndpointType.WINNERS];
   body: undefined;
-  query: {
-    _page?: number;
-    _limit?: number;
-    _sort?: WinnersSortParameter;
-    _order?: 'ASC' | 'DESC';
-  };
+  query: WinnersQuery;
   response: WinnerResponse[];
   headers: {
     'X-Total-Count'?: string;
