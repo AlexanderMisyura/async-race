@@ -33,7 +33,9 @@
       "@components/*": ["src/app/components/*"],
       "@styles/*": ["src/app/styles/*"],
       "@utils/*": ["src/app/utils/*"],
-      "@ts-types/*": ["src/app/models/types/index.ts*"],
+      "@ts-types": ["src/app/models/types/index.ts"],
+      "@ts-interfaces": ["src/app/models/interfaces/index.ts"],
+      "@ts-enums": ["src/app/models/enums/index.ts"],
       "@state-machine/*": ["src/app/state-machine/*"],
       "@services/*": ["src/app/services/*"]
     } /* Specify a set of entries that re-map imports to additional lookup locations. */,
