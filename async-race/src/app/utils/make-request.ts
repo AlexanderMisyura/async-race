@@ -5,8 +5,12 @@ export default async function makeRequest<
   R extends EndpointRequest<E>,
 >(
   apiUrl: string,
-  endpoint: R
-): Promise<EndpointResponse<E, EndpointRequest<E>>> {
+  endpoint: R,
+  abortSignal?: AbortSignal
+): Promise<{
+  data: EndpointResponse<E, EndpointRequest<E>>;
+  headers: Record<string, string | null | undefined>;
+}> {
   const { method, path, query, body } = endpoint;
   const fullPath = `${path.join('/')}${
     query
@@ -18,6 +22,7 @@ export default async function makeRequest<
     method,
     headers: { 'Content-Type': 'application/json' },
     body: body ? JSON.stringify(body) : undefined,
+    signal: abortSignal,
   });
 
   if (!response.ok) {
@@ -28,6 +33,9 @@ export default async function makeRequest<
     E,
     EndpointRequest<E>
   >;
+  const headers = response.headers.get('X-Total-Count')
+    ? { 'X-Total-Count': response.headers.get('X-Total-Count') }
+    : {};
 
-  return data;
+  return { data, headers };
 }
