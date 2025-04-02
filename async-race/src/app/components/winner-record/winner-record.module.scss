@@ -1,0 +1,59 @@
+.winnerRecord {
+  display: flex;
+  gap: 1rem;
+
+  padding: 0.5rem;
+
+  font-family: JollyLodger, sans-serif;
+  font-size: 1.2rem;
+  text-align: center;
+  letter-spacing: 0.1rem;
+
+  background-color: var(--semi-transparent-white);
+
+  &:nth-child(even) {
+    background-color: var(--semi-transparent-light-grey);
+  }
+
+  & > * {
+    position: relative;
+  }
+
+  & > *:not(:last-child)::after {
+    content: '';
+
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-end: 0;
+    transform: translate(0.5rem, -50%);
+
+    inline-size: 1px;
+    block-size: 1rem;
+    margin-inline-start: 1rem;
+    border-inline-end: 1px solid var(--grey);
+  }
+
+  &:nth-child(even) > *:not(:last-child)::after {
+    border-inline-end: 1px solid var(--grey-dark);
+  }
+}
+
+.number {
+  min-inline-size: 2rem;
+}
+
+.tractorImage {
+  min-inline-size: 5rem;
+}
+
+.name {
+  flex-grow: 1;
+  min-inline-size: 5rem;
+  padding-inline-start: 1rem;
+  text-align: start;
+}
+
+.bestTime,
+.wins {
+  min-inline-size: 70px;
+}
