@@ -17,6 +17,7 @@ export type { GetWinnersEndpoint } from './endpoints/get-winners';
 export type { StartStopEngineEndpoint } from './endpoints/start-stop-engine';
 export type { UpdateCarEndpoint } from './endpoints/update-car';
 export type { UpdateWinnerEndpoint } from './endpoints/update-winner';
+export type { PageView } from './page-view';
 export type { Context } from './state-machine/context';
 export type { MachineDefinition } from './state-machine/machine-definition';
 export type { MachinePayload } from './state-machine/machine-payload';
