@@ -37,7 +37,8 @@
       "@ts-interfaces": ["src/app/models/interfaces/index.ts"],
       "@ts-enums": ["src/app/models/enums/index.ts"],
       "@state-machine/*": ["src/app/state-machine/*"],
-      "@services/*": ["src/app/services/*"]
+      "@services/*": ["src/app/services/*"],
+      "@controller/*": ["src/app/controller/*"]
     } /* Specify a set of entries that re-map imports to additional lookup locations. */,
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     // "typeRoots": [],                                  /* Specify multiple folders that act like './node_modules/@types'. */

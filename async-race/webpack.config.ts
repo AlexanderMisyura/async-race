@@ -58,7 +58,7 @@ const config = (environment: {
           loader: 'svg-sprite-loader',
         },
         {
-          test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
+          test: /\.(?:ico|gif|png|jpg|jpeg|webp)$/i,
           type: 'asset/resource',
           generator: {
             filename: 'assets/img/[hash][ext][query]',
@@ -114,11 +114,8 @@ const config = (environment: {
 
     plugins: [
       new HtmlWebpackPlugin({
-        base: isDevelopment ? '/' : BASE_PATH,
         title: 'Async Race',
-        filename: 'index.html',
         favicon: './public/favicon.ico',
-        template: './src/index.html',
       }),
       new MiniCssExtractPlugin({ filename: '[name].[contenthash].css' }),
       new EslintPlugin({ configType: 'flat', extensions: 'ts' }),
