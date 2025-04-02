@@ -7,6 +7,6 @@ export type Car = {
   status: CarStatus;
   velocity: number;
   distance: number;
-  wins: number | undefined;
-  bestWinTime: undefined | number;
+  driveSuccess: boolean;
+  stopDriveController: AbortController;
 };
