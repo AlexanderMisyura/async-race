@@ -1,0 +1,108 @@
+@use './fonts';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --semi-transparent-white: rgb(255 255 255 / 70%);
+  --semi-transparent-black: rgb(0 0 0 / 70%);
+  --semi-transparent-light-grey: rgb(192 192 192 / 70%);
+  --grey: rgb(128 128 128);
+  --grey-dark: rgb(85 85 85);
+
+  user-select: none;
+
+  min-block-size: 100dvh;
+  padding: 1rem;
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  background-image: url('../assets/img/tractor-race-bg.webp');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
+  :has(dialog:open) {
+    overflow: hidden;
+  }
+}
+
+.button,
+.input {
+  padding-inline: 0.5rem;
+  font-family: inherit;
+  font-size: 100%;
+}
+
+.button {
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+
+  font-family: Honk, sans-serif;
+  font-size: 1.2rem;
+
+  background-color: var(--semi-transparent-white);
+  backdrop-filter: blur(3px);
+
+  transition: filter 0.3s;
+
+  &:disabled {
+    cursor: default;
+  }
+
+  &:hover:not(:disabled) {
+    filter: brightness(85%);
+  }
+}
+
+a {
+  text-decoration: none;
+}
+
+dialog {
+  opacity: 0;
+  transition: opacity 0.5s;
+
+  transition-behavior: allow-discrete;
+
+  &::backdrop {
+    opacity: 0;
+    background-color: rgb(255 255 240 / 20%);
+    backdrop-filter: blur(0);
+    transition: backdrop-filter 0.5s allow-discrete;
+
+    @starting-style {
+      & {
+        backdrop-filter: blur(0);
+      }
+    }
+  }
+
+  &[open] {
+    opacity: 1;
+
+    &::backdrop {
+      opacity: 1;
+      backdrop-filter: blur(3px);
+
+      @starting-style {
+        opacity: 0;
+        backdrop-filter: blur(0);
+      }
+    }
+
+    @starting-style {
+      opacity: 0;
+    }
+  }
+}
