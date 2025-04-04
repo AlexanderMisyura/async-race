@@ -12,3 +12,14 @@ declare module '*.mp3' {
   const source: string;
   export default source;
 }
+
+type SpriteSymbol = {
+  id: string;
+  viewBox: string;
+  content: string;
+};
+
+declare module '*.svg' {
+  const content: SpriteSymbol;
+  export default content;
+}
