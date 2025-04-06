@@ -24,7 +24,7 @@ export default class Page extends BaseComponent<'main'> {
 
     const heading = tag.h1({
       classes: [styles.heading],
-      text: `Welcome to Async Tractor Race !!!`,
+      text: `Welcome to The Metal HellSync Race !!!`,
     });
 
     this.winnersButton = tag.button(
