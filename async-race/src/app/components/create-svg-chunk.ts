@@ -1,9 +1,9 @@
 export default function createSvgChunk(
   svgChunk: SpriteSymbol,
-  className: string
+  classes: string[]
 ): SVGElement {
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  svg.classList.add(className);
+  svg.classList.add(...classes);
   svg.setAttribute('viewBox', svgChunk.viewBox);
 
   const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
