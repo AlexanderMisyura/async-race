@@ -20,13 +20,16 @@ class Controller extends Loader {
     body: WinnerRequest
   ): Promise<{ data: WinnerResponse }> {
     try {
-      return await this.createWinner(body);
+      const { data: existedWinner } = await this.getWinner(body.id);
+
+      return await this.updateWinner(body.id, {
+        wins: existedWinner.wins + body.wins,
+        time: Math.min(existedWinner.time, body.time),
+      });
     } catch (error) {
-      if (
-        error instanceof Error &&
-        error.message === '500 - INTERNAL SERVER ERROR'
-      ) {
-        return await this.updateWinner(body.id, {
+      if (error instanceof Error && error.message.includes('404')) {
+        return await this.createWinner({
+          id: body.id,
           time: body.time,
           wins: body.wins,
         });
@@ -41,9 +44,9 @@ class Controller extends Loader {
     body: CarRequest
   ): Promise<{ data: CarResponse }> {
     try {
-      return await this.updateCar(id, body);
+      return await super.updateCar(id, body);
     } catch (error) {
-      if (error instanceof Error && error.message === '404 - NOT FOUND') {
+      if (error instanceof Error && error.message.includes('404)')) {
         console.log('Car with such id was not found in the garage.');
       }
 
@@ -56,11 +59,11 @@ class Controller extends Loader {
       try {
         await super.deleteWinner(id);
       } catch {
-        // ignore
+        console.log('Car was not found in the winners list.');
       }
       return await super.deleteCar(id);
     } catch (error) {
-      if (error instanceof Error && error.message === '404 - NOT FOUND') {
+      if (error instanceof Error && error.message.includes('404')) {
         return { data: {} };
       }
 
@@ -73,11 +76,11 @@ class Controller extends Loader {
       return await this.startStopEngine({ id, status: CarStatus.STARTED });
     } catch (error) {
       if (error instanceof Error) {
-        if (error.message === '400 - BAD REQUEST') {
+        if (error.message.includes('400')) {
           console.log(
             'Wrong parameters: "id" should be any positive number, "status" should be "started", "stopped" or "drive"'
           );
-        } else if (error.message === '404 - NOT FOUND') {
+        } else if (error.message.includes('404')) {
           console.log('Car with such id was not found in the garage.');
         }
       }
@@ -96,7 +99,7 @@ class Controller extends Loader {
             'Wrong parameters: "id" should be any positive number, "status" should be "started", "stopped" or "drive"'
           );
         } else if (error.message.includes('404')) {
-          console.log('No tractor to stop. Perhaps it was removed.');
+          console.log('No truck to stop. Perhaps it was removed.');
         }
       }
 
@@ -105,14 +108,14 @@ class Controller extends Loader {
   }
 
   public async driveCar(
-    id: number,
-    signal: AbortSignal
+    id: number
   ): Promise<{ data: EngineDriveModeResponse }> {
     try {
-      return await super.switchEngineToDrive(
-        { id, status: CarStatus.DRIVE },
-        signal
-      );
+      const result = await super.switchEngineToDrive({
+        id,
+        status: CarStatus.DRIVE,
+      });
+      return result;
     } catch (error) {
       if (error instanceof Error) {
         if (error.message.includes('400')) {
@@ -121,19 +124,20 @@ class Controller extends Loader {
           );
         }
         if (error.message.includes('404')) {
-          console.log('No tractor to drive. Perhaps it was removed.');
+          console.log(
+            "No truck to drive. Perhaps it wasn't started beforehand or was removed."
+          );
         }
         if (error.message.includes('429')) {
           console.log(
-            "You can't make the tractor move faster! Drive is already in progress."
+            "You can't make the truck move faster! Drive is already in progress."
           );
         }
         if (error.message.includes('500')) {
-          console.log('The tractor is stuck!');
+          console.log('The truck has burned down! Hell yeah!');
           return { data: { success: false } };
         }
       }
-
       throw error;
     }
   }

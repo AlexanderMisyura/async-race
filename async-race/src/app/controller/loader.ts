@@ -114,22 +114,17 @@ export default class Loader {
   }
 
   public async switchEngineToDrive(
-    query: EngineDriveQuery,
-    signal: AbortSignal
+    query: EngineDriveQuery
   ): Promise<{ data: EngineDriveModeResponse }> {
     return makeRequest<
       SwitchEngineToDriveEndpoint,
       EndpointRequest<SwitchEngineToDriveEndpoint>
-    >(
-      this.API_URL,
-      {
-        method: Method.PATCH,
-        path: [EndpointType.ENGINE],
-        body: undefined,
-        query,
-      },
-      signal
-    );
+    >(this.API_URL, {
+      method: Method.PATCH,
+      path: [EndpointType.ENGINE],
+      body: undefined,
+      query,
+    });
   }
 
   public async getWinners(query: WinnersQuery): Promise<{
