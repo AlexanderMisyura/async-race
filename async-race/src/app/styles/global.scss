@@ -12,17 +12,23 @@
   --semi-transparent-white: rgb(255 255 255 / 70%);
   --semi-transparent-black: rgb(0 0 0 / 70%);
   --semi-transparent-light-grey: rgb(192 192 192 / 70%);
+  --semi-transparent-darkest-grey: rgb(45 45 45 / 70%);
+  --clr-yellow: #ffda1f;
+  --clr-red: #ff4213;
+  --clr-blue: #79b5c7;
   --grey: rgb(128 128 128);
   --grey-dark: rgb(85 85 85);
 
   user-select: none;
+  scrollbar-gutter: stable both-edges;
 
   min-block-size: 100dvh;
-  padding: 1rem;
+  padding-block: 0 1rem;
+  padding-inline: 1rem;
 
   font-family: Arial, Helvetica, sans-serif;
 
-  background-image: url('../assets/img/tractor-race-bg.webp');
+  background-image: url('../assets/img/race-bg.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -105,4 +111,18 @@ dialog {
       opacity: 0;
     }
   }
+}
+
+.icon {
+  inline-size: 57px;
+  block-size: 57px;
+}
+
+.iconSmall {
+  inline-size: 45px;
+  block-size: 45px;
+}
+
+.iconShadow {
+  filter: drop-shadow(0 0 3px black);
 }
