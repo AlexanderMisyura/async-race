@@ -1,0 +1,94 @@
+.winners {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.line {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.sideHeading {
+  padding-block: 0.2rem;
+  padding-inline: 0.5rem;
+
+  font-family: JollyLodger, sans-serif;
+  font-size: 1.2rem;
+  font-style: italic;
+  color: ivory;
+  letter-spacing: 0.1rem;
+
+  background-color: var(--semi-transparent-black);
+}
+
+.head {
+  display: flex;
+  gap: 1rem;
+  align-self: center;
+
+  inline-size: 100%;
+  max-inline-size: 48rem;
+  padding: 0.5rem;
+
+  font-family: Honk, sans-serif;
+  font-size: 1.2rem;
+  text-align: center;
+
+  background-color: var(--grey);
+  backdrop-filter: blur(3px);
+
+  & > * {
+    position: relative;
+  }
+
+  & > *:not(:last-child)::after {
+    content: '';
+
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-end: 0;
+    transform: translate(0.5rem, -50%);
+
+    inline-size: 1px;
+    block-size: 1rem;
+    margin-inline-start: 1rem;
+    border-inline-end: 1px solid black;
+  }
+}
+
+.number {
+  min-inline-size: 2rem;
+}
+
+.truckImage {
+  min-inline-size: 5rem;
+}
+
+.name {
+  flex-grow: 1;
+  min-inline-size: 5rem;
+}
+
+.sortButton {
+  min-inline-size: 70px;
+  background-color: var(--grey);
+}
+
+.winnersTable {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+
+  inline-size: 100%;
+  max-inline-size: 48rem;
+
+  backdrop-filter: blur(3px);
+}
+
+.navigation {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
