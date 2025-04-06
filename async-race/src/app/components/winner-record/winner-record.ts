@@ -1,8 +1,10 @@
 import BaseComponent from '@components/base-component';
+import createSvgChunk from '@components/create-svg-chunk';
 import tag from '@components/utility-components';
 import machine from '@state-machine/machine';
 import type { Car, MachinePayload, Winner } from '@ts-types';
 
+import racerSvg from '../../assets/img/monster-truck.svg';
 import * as styles from './winner-record.module.scss';
 
 export default class WinnerRecord extends BaseComponent<'div'> {
@@ -10,6 +12,8 @@ export default class WinnerRecord extends BaseComponent<'div'> {
   private image: BaseComponent<'div'> | undefined;
   private name: BaseComponent<'div'> | undefined;
   private wins: BaseComponent<'div'> | undefined;
+  private racerSvg: SVGElement | undefined;
+  private racer: BaseComponent<'div'> | undefined;
   private bestTime: BaseComponent<'div'> | undefined;
 
   constructor(
@@ -57,11 +61,14 @@ export default class WinnerRecord extends BaseComponent<'div'> {
       classes: [styles.number],
       text: seqNumber.toString(),
     });
-    this.image = tag.div({
-      classes: [styles.tractorImage],
-      text: 'tractor',
-    });
+    this.racer = tag.div({ classes: [styles.racer] });
+    this.racerSvg = createSvgChunk(racerSvg, ['iconSmall']);
+    this.racer.getElement().append(this.racerSvg);
     this.name = tag.div({ classes: [styles.name] });
+    const nameContainer = tag.div(
+      { classes: [styles.nameContainer] },
+      this.name
+    );
     this.wins = tag.div({
       classes: [styles.wins],
       text: this.winnerData.wins.toString(),
@@ -71,11 +78,11 @@ export default class WinnerRecord extends BaseComponent<'div'> {
       text: this.winnerData.time.toString(),
     });
 
-    return [number, this.image, this.name, this.wins, this.bestTime];
+    return [number, this.racer, nameContainer, this.wins, this.bestTime];
   }
 
   private updateRecord(car: Car): void {
-    if (this.image) this.image.getElement().style.color = car.color;
+    if (this.racer) this.racer.getElement().style.color = car.color;
     this.name?.setText(car.name);
   }
 }

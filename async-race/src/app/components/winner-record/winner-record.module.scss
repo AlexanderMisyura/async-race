@@ -2,7 +2,7 @@
   display: flex;
   gap: 1rem;
 
-  padding: 0.5rem;
+  padding-inline: 0.5rem;
 
   font-family: JollyLodger, sans-serif;
   font-size: 1.2rem;
@@ -11,12 +11,22 @@
 
   background-color: var(--semi-transparent-white);
 
-  &:nth-child(even) {
-    background-color: var(--semi-transparent-light-grey);
-  }
+  transition: background-color 0.3s ease-in-out;
 
   & > * {
     position: relative;
+  }
+
+  &:hover {
+    background-color: rgb(232 232 232 / 70%);
+  }
+
+  &:nth-child(even) {
+    background-color: var(--semi-transparent-light-grey);
+
+    &:hover {
+      background-color: rgb(174 174 174 / 70%);
+    }
   }
 
   & > *:not(:last-child)::after {
@@ -39,21 +49,39 @@
 }
 
 .number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   min-inline-size: 2rem;
 }
 
-.tractorImage {
+.racer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   min-inline-size: 5rem;
 }
 
-.name {
+.nameContainer {
+  display: flex;
   flex-grow: 1;
+  align-items: center;
+
   min-inline-size: 5rem;
   padding-inline-start: 1rem;
+}
+
+.name {
+  overflow: hidden;
   text-align: start;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .bestTime,
 .wins {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   min-inline-size: 70px;
 }
