@@ -1,28 +1,38 @@
 import config from '../config';
-const { TRACTOR_DATA } = config;
+const { ADJECTIVES, NOUNS } = config;
 import type { CarRequest } from '@ts-interfaces';
 
 const MAX_RANGE_ADJUSTMENT = 1;
+const HEX_LENGTH = 6;
+const INDEX_OFFSET = 1;
+const FIRST_ITEM = 0;
 
 export function getRandom(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + MAX_RANGE_ADJUSTMENT)) + min;
 }
 
-const DARK = 0;
-const LIGHT = 255;
+export function getRandomHexColor(): string {
+  const letters = [...'0123456789ABCDEF'];
+  let color = '#';
 
-export function getRandomColor(): string {
-  return `rgb(${getRandom(DARK, LIGHT)} ${getRandom(DARK, LIGHT)} ${getRandom(DARK, LIGHT)})`;
+  for (let index = 0; index < HEX_LENGTH; index++) {
+    color +=
+      letters[Math.round(Math.random() * (letters.length - INDEX_OFFSET))];
+  }
+
+  return color;
 }
 
-const FIRST_ITEM = 0;
-const INDEX_OFFSET = 1;
-
 export function getRandomRacer(): CarRequest {
-  const brands = Object.keys(TRACTOR_DATA) as Array<keyof typeof TRACTOR_DATA>;
-  const brand = brands[getRandom(FIRST_ITEM, brands.length - INDEX_OFFSET)];
-  const models = TRACTOR_DATA[brand];
-  const model = models[getRandom(FIRST_ITEM, models.length - INDEX_OFFSET)];
-  const color = getRandomColor();
-  return { name: `${brand} ${model}`, color };
+  const name = getRandomName();
+  const color = getRandomHexColor();
+  return { name, color };
+}
+
+export function getRandomName(): string {
+  const adjective =
+    ADJECTIVES[getRandom(FIRST_ITEM, ADJECTIVES.length - INDEX_OFFSET)];
+  const noun = NOUNS[getRandom(FIRST_ITEM, NOUNS.length - INDEX_OFFSET)];
+
+  return `${adjective} ${noun}`;
 }
