@@ -7,6 +7,6 @@ export type Car = {
   status: CarStatus;
   velocity: number;
   distance: number;
-  driveSuccess: boolean;
+  driveSuccess: boolean | undefined;
   stopDriveController: AbortController;
 };
