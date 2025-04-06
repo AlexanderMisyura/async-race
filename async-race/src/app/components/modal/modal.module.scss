@@ -1,0 +1,44 @@
+.modal {
+  user-select: none;
+
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  transform: translate(calc(-50% - 16px), -50%);
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  inline-size: 80dvw;
+  max-inline-size: 450px;
+  padding: 0;
+
+  background-color: var(--semi-transparent-black);
+  background-image: url('../../assets/img/flame-border-vector-37-2.png');
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  background-size: contain;
+  box-shadow: 0 4px 35px -1px rgb(0 0 0 / 41%);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  block-size: 100%;
+  padding-block: 2rem;
+  padding-inline: 2rem;
+
+  font-family: JollyLodger, sans-serif;
+  font-size: 2rem;
+  color: ivory;
+  text-align: center;
+  letter-spacing: 0.1rem;
+}
+
+.closeBtn {
+  inline-size: 100%;
+  font-size: 3rem;
+  text-align: center;
+}
