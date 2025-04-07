@@ -106,9 +106,13 @@ export default class Garage extends BaseComponent<'div'> {
         break;
       }
       case 'startCar': {
-        this.updateData(carsPageNumber, carsPerPage, carsTotal, pageCars);
+        this.newCarButton?.getElement().setAttribute('disabled', '');
+        this.generateButton?.getElement().setAttribute('disabled', '');
         this.resetAllButton?.getElement().removeAttribute('disabled');
         this.startAllButton?.getElement().setAttribute('disabled', '');
+
+        this.updateData(carsPageNumber, carsPerPage, carsTotal, pageCars);
+
         if (contextData?.car?.id === this.selectedCar?.id) {
           this.resetSelectedCar();
         }
