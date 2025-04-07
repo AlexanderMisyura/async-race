@@ -1,4 +1,3 @@
-/* eslint-disable max-lines-per-function */
 import BaseComponent from '@components/base-component';
 import CarTrack from '@components/car-track/car-track';
 import tag from '@components/utility-components';
@@ -79,6 +78,7 @@ export default class Garage extends BaseComponent<'div'> {
     }
   }
 
+  // eslint-disable-next-line max-lines-per-function
   private handleStateChange(payload: MachinePayload): void {
     const { trigger, getFullContext, contextData } = payload;
     const { carsPageNumber, carsPerPage, carsTotal, pageCars } =
@@ -246,6 +246,7 @@ export default class Garage extends BaseComponent<'div'> {
     });
   }
 
+  // eslint-disable-next-line max-lines-per-function
   private createNavigation(): BaseComponent<'div'> {
     const ONE_PAGE = 1;
 
