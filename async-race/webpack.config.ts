@@ -24,7 +24,7 @@ const config = (environment: {
 
     devServer: {
       historyApiFallback: true,
-      client: { overlay: { warnings: false } },
+      client: { overlay: { warnings: false }, logging: 'none' },
     },
 
     optimization: {
