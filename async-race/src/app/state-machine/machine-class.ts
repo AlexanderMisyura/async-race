@@ -46,7 +46,7 @@ export class StateMachine {
       this.emit(this.events.machineStateChanged, payload);
     } catch (error) {
       console.log(
-        `An error occurred during state machine's transition from ${currentState} to ${destinationState}:`,
+        `An error occurred during state machine's transition from ${currentState} to ${destinationState} with trigger ${trigger}:`,
         error
       );
     }
