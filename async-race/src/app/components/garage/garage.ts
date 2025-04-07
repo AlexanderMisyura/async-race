@@ -318,6 +318,15 @@ export default class Garage extends BaseComponent<'div'> {
 
     this.updateNavigation();
 
+    for (const child of this.raceContainer.childComponents) {
+      if (child instanceof CarTrack) {
+        this.emitterGarageManager.off(
+          this.events.carDropSelected,
+          child.boundUnSelect
+        );
+      }
+    }
+
     this.raceContainer.removeChildren();
 
     for (const car of pageCars) {
@@ -325,7 +334,7 @@ export default class Garage extends BaseComponent<'div'> {
       const carTrack = new CarTrack(car, this.emitCar.bind(this));
       this.emitterGarageManager.on(
         this.events.carDropSelected,
-        carTrack.unSelect.bind(carTrack)
+        carTrack.boundUnSelect
       );
       this.raceContainer.appendSingle(carTrack);
     }
