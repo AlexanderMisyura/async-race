@@ -11,6 +11,14 @@
   font-size: 3rem;
   text-align: center;
   text-shadow: 0 0 3px black;
+
+  @media (width < 850px) {
+    font-size: 2.5rem;
+  }
+
+  @media (width < 710px) {
+    font-size: 2rem;
+  }
 }
 
 .page {
