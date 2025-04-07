@@ -10,6 +10,7 @@ import * as styles from './winners.module.scss';
 
 const INITIAL_CARS_TOTAL = 0;
 const INDEX_OFFSET = 1;
+const PAGE_OFFSET = 1;
 
 export default class Winners extends BaseComponent<'div'> {
   private winnersTable: BaseComponent<'div'>;
@@ -228,7 +229,11 @@ export default class Winners extends BaseComponent<'div'> {
     this.winnersTable.removeChildren();
 
     for (const [index, winner] of pageWinners.entries()) {
-      const winnerRecord = new WinnerRecord(winner, index + INDEX_OFFSET);
+      const seqNumber =
+        (winnersPageNumber - PAGE_OFFSET) * this.winnersPerPage +
+        index +
+        INDEX_OFFSET;
+      const winnerRecord = new WinnerRecord(winner, seqNumber);
       this.winnersTable.appendSingle(winnerRecord);
     }
   }
