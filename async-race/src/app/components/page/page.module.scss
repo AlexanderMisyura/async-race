@@ -29,8 +29,27 @@
 
 .buttonsContainer {
   position: relative;
+
   display: flex;
   align-items: center;
+  justify-content: center;
+
+  inline-size: 100%;
+  max-inline-size: 1200px;
+}
+
+.audioButton {
+  position: absolute;
+  inset-inline-start: 0;
+  align-self: flex-start;
+}
+
+.viewButtons {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  align-self: center;
   justify-content: center;
 }
 
