@@ -144,10 +144,7 @@ export default class Garage extends BaseComponent<'div'> {
     carsTotal: number,
     pageCars: Car[]
   ): void {
-    if (
-      contextData?.car?.id !== undefined &&
-      contextData.car?.id === this.selectedCar?.id
-    ) {
+    if (contextData?.car?.id === this.selectedCar?.id) {
       this.resetSelectedCar();
     }
     this.updateData(carsPageNumber, carsPerPage, carsTotal, pageCars);
@@ -161,7 +158,9 @@ export default class Garage extends BaseComponent<'div'> {
     if (areCarsReady) {
       this.enableButtons();
       for (const car of this.raceContainer.childComponents) {
-        if (car instanceof CarTrack) car.enableStart();
+        if (car instanceof CarTrack) {
+          car.enableControls();
+        }
       }
       this.resetAllButton?.getElement().setAttribute('disabled', '');
       this.startAllButton?.getElement().removeAttribute('disabled');
