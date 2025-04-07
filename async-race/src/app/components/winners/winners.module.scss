@@ -44,12 +44,13 @@
   }
 
   & > *:not(:last-child)::after {
+    pointer-events: none;
     content: '';
 
     position: absolute;
     inset-block-start: 50%;
     inset-inline-end: 0;
-    transform: translate(0.5rem, -50%);
+    transform: translate(calc(0.5rem + 1px), -50%);
 
     inline-size: 1px;
     block-size: 1rem;
@@ -63,17 +64,23 @@
 }
 
 .truckImage {
-  min-inline-size: 5rem;
+  min-inline-size: 3.5rem;
 }
 
 .name {
   flex-grow: 1;
-  min-inline-size: 5rem;
+  min-inline-size: 3.5rem;
 }
 
 .sortButton {
   min-inline-size: 70px;
+  border: 1px solid var(--grey-dark);
+  white-space: nowrap;
   background-color: var(--grey);
+}
+
+.sortIdButton {
+  min-inline-size: 50px;
 }
 
 .winnersTable {

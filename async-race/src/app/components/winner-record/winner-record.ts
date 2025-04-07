@@ -61,6 +61,10 @@ export default class WinnerRecord extends BaseComponent<'div'> {
       classes: [styles.number],
       text: seqNumber.toString(),
     });
+    this.id = tag.div({
+      classes: [styles.id],
+      text: this.winnerData.id.toString(),
+    });
     this.racer = tag.div({ classes: [styles.racer] });
     this.racerSvg = createSvgChunk(racerSvg, ['iconSmall']);
     this.racer.getElement().append(this.racerSvg);
@@ -78,7 +82,14 @@ export default class WinnerRecord extends BaseComponent<'div'> {
       text: this.winnerData.time.toString(),
     });
 
-    return [number, this.racer, nameContainer, this.wins, this.bestTime];
+    return [
+      number,
+      this.id,
+      this.racer,
+      nameContainer,
+      this.wins,
+      this.bestTime,
+    ];
   }
 
   private updateRecord(car: Car): void {

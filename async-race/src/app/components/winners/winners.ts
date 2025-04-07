@@ -20,6 +20,7 @@ export default class Winners extends BaseComponent<'div'> {
   private nextButton: BaseComponent<'button'> | undefined;
   private winsButton: BaseComponent<'button'> | undefined;
   private timeButton: BaseComponent<'button'> | undefined;
+  private idButton: BaseComponent<'button'> | undefined;
   private winnersPageNumber: number = config.DEFAULT_WINNERS_PAGE_NUMBER;
   private winnersPerPage: number = config.DEFAULT_WINNERS_PER_PAGE;
   private winnersSortBy: WinnersSortParameter = config.DEFAULT_WINNERS_SORT_BY;
@@ -56,6 +57,10 @@ export default class Winners extends BaseComponent<'div'> {
       classes: [styles.truckImage],
       text: 'Truck',
     });
+    this.idButton = tag.button({
+      classes: [styles.sortButton, styles.sortIdButton, 'button'],
+      onclick: () => this.handleSortId(),
+    });
     const name = tag.div({ classes: [styles.name], text: 'Name' });
     this.winsButton = tag.button({
       classes: [styles.sortButton, 'button'],
@@ -69,6 +74,7 @@ export default class Winners extends BaseComponent<'div'> {
     return tag.div(
       { classes: [styles.head] },
       number,
+      this.idButton,
       truckImage,
       name,
       this.winsButton,
@@ -100,6 +106,26 @@ export default class Winners extends BaseComponent<'div'> {
     let winnersSortOrder;
     const winnersSortBy = WinnersSortParameter.TIME;
     if (this.winnersSortBy === WinnersSortParameter.TIME) {
+      winnersSortOrder =
+        this.winnersSortOrder === WinnersOrderParameter.ASC
+          ? WinnersOrderParameter.DESC
+          : WinnersOrderParameter.ASC;
+    } else {
+      winnersSortOrder = WinnersOrderParameter.ASC;
+    }
+
+    void machine.makeTransition(machine.value, 'getWinners', {
+      winnersPageNumber: this.winnersPageNumber,
+      winnersPerPage: this.winnersPerPage,
+      winnersSortBy,
+      winnersSortOrder,
+    });
+  }
+
+  private handleSortId(): void {
+    let winnersSortOrder;
+    const winnersSortBy = WinnersSortParameter.ID;
+    if (this.winnersSortBy === WinnersSortParameter.ID) {
       winnersSortOrder =
         this.winnersSortOrder === WinnersOrderParameter.ASC
           ? WinnersOrderParameter.DESC
@@ -271,22 +297,55 @@ export default class Winners extends BaseComponent<'div'> {
   private updateHead(): void {
     const { winnersSortBy, winnersSortOrder } = this;
 
-    if (winnersSortBy === WinnersSortParameter.TIME) {
-      if (winnersSortOrder === WinnersOrderParameter.ASC) {
-        this.winsButton?.setText('Wins');
-        this.timeButton?.setText('Time ↑');
-      } else {
-        this.winsButton?.setText('Wins');
-        this.timeButton?.setText('Time ↓');
+    switch (winnersSortBy) {
+      case WinnersSortParameter.TIME: {
+        this.sortByTime(winnersSortOrder);
+        break;
       }
-    } else if (winnersSortBy === WinnersSortParameter.WINS) {
-      if (winnersSortOrder === WinnersOrderParameter.ASC) {
-        this.winsButton?.setText('Wins ↑');
-        this.timeButton?.setText('Time');
-      } else {
-        this.winsButton?.setText('Wins ↓');
-        this.timeButton?.setText('Time');
+      case WinnersSortParameter.WINS: {
+        this.sortByWins(winnersSortOrder);
+        break;
       }
+      case WinnersSortParameter.ID: {
+        this.sortById(winnersSortOrder);
+        break;
+      }
+    }
+  }
+
+  private sortByTime(sortOrder: WinnersOrderParameter): void {
+    if (sortOrder === WinnersOrderParameter.ASC) {
+      this.idButton?.setText('Id');
+      this.winsButton?.setText('Wins');
+      this.timeButton?.setText('Time ↑');
+    } else {
+      this.idButton?.setText('Id');
+      this.winsButton?.setText('Wins');
+      this.timeButton?.setText('Time ↓');
+    }
+  }
+
+  private sortByWins(sortOrder: WinnersOrderParameter): void {
+    if (sortOrder === WinnersOrderParameter.ASC) {
+      this.idButton?.setText('Id');
+      this.winsButton?.setText('Wins ↑');
+      this.timeButton?.setText('Time');
+    } else {
+      this.idButton?.setText('Id');
+      this.winsButton?.setText('Wins ↓');
+      this.timeButton?.setText('Time');
+    }
+  }
+
+  private sortById(sortOrder: WinnersOrderParameter): void {
+    if (sortOrder === WinnersOrderParameter.ASC) {
+      this.idButton?.setText('Id ↑');
+      this.winsButton?.setText('Wins');
+      this.timeButton?.setText('Time');
+    } else {
+      this.idButton?.setText('Id ↓');
+      this.winsButton?.setText('Wins');
+      this.timeButton?.setText('Time');
     }
   }
 }
