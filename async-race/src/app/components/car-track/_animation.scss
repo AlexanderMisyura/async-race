@@ -1,0 +1,23 @@
+@keyframes headingBgMove {
+  to {
+    background-position: 200%;
+  }
+}
+
+@keyframes throttle {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(-15deg);
+  }
+
+  80% {
+    transform: rotate(-15deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}

@@ -1,0 +1,147 @@
+@use './animation.scss' as *;
+
+.trackSection {
+  display: flex;
+  flex-direction: column;
+  inline-size: 100%;
+}
+
+.controls {
+  display: grid;
+  grid-template-areas: 'select remove name startStop';
+  grid-template-columns: auto auto 1fr auto auto;
+}
+
+.select {
+  grid-area: select;
+  margin-inline-end: 0.5rem;
+}
+
+.remove {
+  grid-area: remove;
+  margin-inline-end: 0.5rem;
+}
+
+// .nameContainer {
+//   display: flex;
+//   grid-area: name;
+//   align-items: center;
+//   justify-content: flex-start;
+
+//   margin-inline-end: 0.5rem;
+//   padding-block: 0;
+//   padding-inline: 0.5rem;
+
+//   backdrop-filter: blur(3px);
+// }
+
+.name {
+  overflow: hidden;
+
+  font-family: JollyLodger, sans-serif;
+  font-size: 1.3rem;
+  color: ivory;
+  text-overflow: ellipsis;
+  letter-spacing: 0.1rem;
+  white-space: nowrap;
+}
+
+.buttonsContainer {
+  display: flex;
+  grid-area: startStop;
+  align-items: center;
+  justify-content: center;
+}
+
+.raceButton {
+  position: relative;
+
+  overflow: hidden;
+
+  inline-size: 0;
+  block-size: 25px;
+  padding: 0;
+
+  text-transform: capitalize;
+
+  transition:
+    inline-size 0.3s ease-in-out,
+    padding-inline 0.3s ease-in-out,
+    filter 0.3s;
+
+  .buttonText {
+    position: absolute;
+    inline-size: 60px;
+  }
+
+  &.active {
+    inline-size: 60px;
+    padding-inline: 0.5rem;
+  }
+}
+
+.track {
+  display: flex;
+  justify-content: space-between;
+
+  inline-size: 100%;
+  block-size: 57px;
+
+  background-image: url('../../assets/img/flame-border-vector-37-3.png');
+  background-repeat: repeat-x;
+  background-position: center 57px;
+  background-size: 500px;
+
+  transition:
+    background-position 1s linear,
+    background-size 1s linear;
+}
+
+.racer {
+  position: relative;
+}
+
+.selected {
+  background-image: url('../../assets/img/fire-border.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.raceActive {
+  .track {
+    background-position: center -10px;
+    background-size: 100px;
+  }
+
+  .throttle {
+    animation: throttle 2s 1;
+  }
+}
+
+.finish {
+  position: relative;
+  inset-inline-end: 60px;
+  color: whitesmoke;
+}
+
+.emphasized {
+  background-image: linear-gradient(
+    to right,
+    var(--clr-yellow) 0%,
+    var(--clr-red) 25%,
+    var(--clr-blue) 50%,
+    var(--clr-red) 75%,
+    var(--clr-yellow) 100%
+  );
+  background-clip: text;
+  background-size: 200% auto;
+
+  animation: headingBgMove 5s linear infinite;
+
+  -webkit-text-fill-color: transparent;
+}
+
+.winnerName {
+  font-size: 2.5rem;
+  text-transform: uppercase;
+}
