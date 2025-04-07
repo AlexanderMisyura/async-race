@@ -225,10 +225,6 @@ export default class CarTrack extends BaseComponent {
         this.handleUpdateCar(contextData.car);
         break;
       }
-      case 'checkRaceDriveSuccess': {
-        this.updateCarTrack(getFullContext());
-        break;
-      }
       case 'checkDriveSuccess': {
         if (contextData?.car !== this.carData) break;
         this.updateCarTrack(getFullContext());
