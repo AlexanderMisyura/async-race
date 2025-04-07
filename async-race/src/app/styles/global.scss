@@ -123,6 +123,11 @@ dialog {
   block-size: 45px;
 }
 
+.iconExtraSmall {
+  inline-size: 30px;
+  block-size: 30px;
+}
+
 .iconShadow {
   filter: drop-shadow(0 0 3px black);
 }

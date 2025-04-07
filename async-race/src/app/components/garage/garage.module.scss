@@ -23,15 +23,26 @@
   gap: 0.5rem;
 }
 
-.colorInput {
+.colorLabel {
   align-self: center;
+
   inline-size: 30px;
   min-inline-size: 30px;
   block-size: 30px;
 
-  &:hover:not(:disabled) {
+  background-color: var(--semi-transparent-black);
+
+  &:has(.colorInput:disabled) {
+    background-color: var(--semi-transparent-darkest-grey)
+  }
+
+  &:hover:not(:has(.colorInput:disabled)) {
     cursor: pointer;
   }
+}
+
+.colorInput {
+  display: none;
 }
 
 .nameInput {
@@ -64,7 +75,7 @@
   max-inline-size: 20rem;
 }
 
-.strippedButton {
+.stripedButton {
   font-size: 1.5rem;
   text-shadow: 0 0 3px #fff;
   background-image: linear-gradient(

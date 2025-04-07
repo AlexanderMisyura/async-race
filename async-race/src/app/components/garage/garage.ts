@@ -1,5 +1,6 @@
 import BaseComponent from '@components/base-component';
 import CarTrack from '@components/car-track/car-track';
+import createSvgChunk from '@components/create-svg-chunk';
 import tag from '@components/utility-components';
 import machine from '@state-machine/machine';
 import { CarStatus } from '@ts-enums';
@@ -7,10 +8,12 @@ import type { Car, Context, MachinePayload } from '@ts-types';
 import { getRandomHexColor, getRandomName } from '@utils/get-random';
 import config from 'src/app/config';
 
+import racerSvg from '../../assets/img/monster-truck.svg';
 import EmitterGarageManager from './event-emitter-garage-manager';
 import * as styles from './garage.module.scss';
 
 const INITIAL_CARS_TOTAL = 0;
+const DEFAULT_NON_SELECTED_CAR_COLOR = '#ffffff';
 
 export default class Garage extends BaseComponent<'div'> {
   private raceContainer: BaseComponent<'div'>;
@@ -19,8 +22,10 @@ export default class Garage extends BaseComponent<'div'> {
   private prevButton: BaseComponent<'button'> | undefined;
   private nextButton: BaseComponent<'button'> | undefined;
   private nameInputNew: BaseComponent<'input'> | undefined;
+  private imageInputNew: SVGElement | undefined;
   private colorInputNew: BaseComponent<'input'> | undefined;
   private nameInputUpdate: BaseComponent<'input'> | undefined;
+  private imageInputUpdate: SVGElement | undefined;
   private colorInputUpdate: BaseComponent<'input'> | undefined;
   private newCarButton: BaseComponent<'button'> | undefined;
   private updateCarButton: BaseComponent<'button'> | undefined;
@@ -67,11 +72,13 @@ export default class Garage extends BaseComponent<'div'> {
   private handleCarSelected(car: Car | boolean): void {
     this.selectedCar = car as Car;
     if (
-      this.nameInputUpdate?.getElement() &&
-      this.colorInputUpdate?.getElement()
+      this.nameInputUpdate &&
+      this.colorInputUpdate &&
+      this.imageInputUpdate
     ) {
       this.nameInputUpdate.getElement().value = this.selectedCar.name;
       this.colorInputUpdate.getElement().value = this.selectedCar.color;
+      this.imageInputUpdate.style.color = this.selectedCar.color;
       this.nameInputUpdate.getElement().removeAttribute('disabled');
       this.colorInputUpdate.getElement().removeAttribute('disabled');
       this.updateCarButton?.getElement().removeAttribute('disabled');
@@ -209,7 +216,7 @@ export default class Garage extends BaseComponent<'div'> {
 
   private createGenerateButton(): BaseComponent<'button'> {
     return tag.button({
-      classes: [styles.strippedButton, 'button'],
+      classes: [styles.stripedButton, 'button'],
       text: 'Generate 100 Hell Trucks',
       title: "Yeah, they're very ordinary, but they're kinda cool too",
       onclick: () => void machine.makeTransition(machine.value, 'addBulkCars'),
@@ -349,17 +356,13 @@ export default class Garage extends BaseComponent<'div'> {
       classes: [styles.nameInput, 'input'],
       placeholder: 'Cool truck name needed',
       value: getRandomName(),
-      oninput: () => this.newInputHandle(),
+      oninput: () => this.nameInputNewInputHandle(),
     });
 
-    this.colorInputNew = tag.input({
-      classes: [styles.colorInput],
-      type: 'color',
-      value: getRandomHexColor(),
-    });
+    const labelInputNew = this.createLabelInputNew();
 
     this.newCarButton = tag.button({
-      classes: [styles.strippedButton, 'button'],
+      classes: [styles.stripedButton, 'button'],
       text: 'New Hell Truck',
       onclick: () => this.addCar(),
     });
@@ -375,12 +378,42 @@ export default class Garage extends BaseComponent<'div'> {
     return tag.div(
       { classes: [styles.inputBlock] },
       this.nameInputNew,
-      this.colorInputNew,
+      labelInputNew,
       this.newCarButton
     );
   }
 
-  private newInputHandle(): void {
+  private createLabelInputNew(): BaseComponent<'label'> {
+    const color = getRandomHexColor();
+    this.imageInputNew = createSvgChunk(racerSvg, ['iconExtraSmall']);
+    this.imageInputNew.style.color = color;
+
+    this.colorInputNew = tag.input({
+      classes: [styles.colorInput],
+      type: 'color',
+      value: color,
+      oninput: () => this.colorInputNewInputHandle(),
+    });
+
+    const labelInputNew = tag.label(
+      {
+        classes: [styles.colorLabel],
+      },
+      this.colorInputNew
+    );
+    labelInputNew.getElement().append(this.imageInputNew);
+
+    return labelInputNew;
+  }
+
+  private colorInputNewInputHandle(): void {
+    if (this.imageInputNew && this.colorInputNew) {
+      const color = this.colorInputNew?.getElement().value;
+      this.imageInputNew.style.color = color;
+    }
+  }
+
+  private nameInputNewInputHandle(): void {
     this.emitterGarageManager.emit(
       this.events.inputNewChanged,
       !this.nameInputNew?.getElement().value
@@ -401,6 +434,10 @@ export default class Garage extends BaseComponent<'div'> {
 
       this.nameInputNew.getElement().value = getRandomName();
       this.colorInputNew.getElement().value = getRandomHexColor();
+
+      if (this.imageInputNew) {
+        this.imageInputNew.style.color = this.colorInputNew.getElement().value;
+      }
     }
   }
 
@@ -414,14 +451,10 @@ export default class Garage extends BaseComponent<'div'> {
       classes: [styles.nameInput, 'input'],
       placeholder: 'Change not-so-cool name',
       disabled: true,
-      oninput: () => this.createInputHandle(),
+      oninput: () => this.nameInputUpdateInputHandle(),
     });
 
-    this.colorInputUpdate = tag.input({
-      classes: [styles.colorInput],
-      type: 'color',
-      disabled: true,
-    });
+    const labelInputUpdate = this.createLabelInputUpdate();
 
     this.updateCarButton = tag.button({
       classes: ['button'],
@@ -444,16 +477,47 @@ export default class Garage extends BaseComponent<'div'> {
     return tag.div(
       { classes: [styles.inputBlock] },
       this.nameInputUpdate,
-      this.colorInputUpdate,
+      labelInputUpdate,
       this.updateCarButton
     );
   }
 
-  private createInputHandle(): void {
+  private createLabelInputUpdate(): BaseComponent<'label'> {
+    const color = DEFAULT_NON_SELECTED_CAR_COLOR;
+    this.imageInputUpdate = createSvgChunk(racerSvg, ['iconExtraSmall']);
+    this.imageInputUpdate.style.color = color;
+
+    this.colorInputUpdate = tag.input({
+      classes: [styles.colorInput],
+      type: 'color',
+      disabled: true,
+      value: color,
+      oninput: () => this.colorInputUpdateInputHandle(),
+    });
+
+    const labelInputUpdate = tag.label(
+      {
+        classes: [styles.colorLabel],
+      },
+      this.colorInputUpdate
+    );
+    labelInputUpdate.getElement().append(this.imageInputUpdate);
+
+    return labelInputUpdate;
+  }
+
+  private nameInputUpdateInputHandle(): void {
     this.emitterGarageManager.emit(
       this.events.inputUpdateChanged,
       !this.nameInputUpdate?.getElement().value
     );
+  }
+
+  private colorInputUpdateInputHandle(): void {
+    if (this.imageInputUpdate && this.colorInputUpdate) {
+      const color = this.colorInputUpdate?.getElement().value;
+      this.imageInputUpdate.style.color = color;
+    }
   }
 
   private updateCar(): void {
@@ -476,14 +540,18 @@ export default class Garage extends BaseComponent<'div'> {
   private resetSelectedCar(): void {
     if (
       this.nameInputUpdate?.getElement() &&
-      this.colorInputUpdate?.getElement()
+      this.colorInputUpdate?.getElement() &&
+      this.imageInputUpdate
     ) {
       this.emitterGarageManager.emit(this.events.carDropSelected, true);
 
       this.selectedCar = undefined;
 
+      const color = DEFAULT_NON_SELECTED_CAR_COLOR;
+
       this.nameInputUpdate.getElement().value = '';
-      this.colorInputUpdate.getElement().value = '#000000';
+      this.colorInputUpdate.getElement().value = color;
+      this.imageInputUpdate.style.color = color;
       this.nameInputUpdate.getElement().setAttribute('disabled', '');
       this.colorInputUpdate.getElement().setAttribute('disabled', '');
       this.updateCarButton?.getElement().setAttribute('disabled', '');
