@@ -24,6 +24,8 @@
 }
 
 .colorLabel {
+  position: relative;
+
   align-self: center;
 
   inline-size: 30px;
@@ -33,7 +35,7 @@
   background-color: var(--semi-transparent-black);
 
   &:has(.colorInput:disabled) {
-    background-color: var(--semi-transparent-darkest-grey)
+    background-color: var(--semi-transparent-darkest-grey);
   }
 
   &:hover:not(:has(.colorInput:disabled)) {
@@ -42,7 +44,8 @@
 }
 
 .colorInput {
-  display: none;
+  position: absolute;
+  visibility: hidden;
 }
 
 .nameInput {
