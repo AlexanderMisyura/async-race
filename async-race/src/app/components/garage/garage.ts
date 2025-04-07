@@ -205,7 +205,7 @@ export default class Garage extends BaseComponent<'div'> {
 
   private createGenerateButton(): BaseComponent<'button'> {
     return tag.button({
-      classes: [styles.generateButton, styles.strippedButton, 'button'],
+      classes: [styles.strippedButton, 'button'],
       text: 'Generate 100 Hell Trucks',
       title: "Yeah, they're very ordinary, but they're kinda cool too",
       onclick: () => void machine.makeTransition(machine.value, 'addBulkCars'),
@@ -354,7 +354,7 @@ export default class Garage extends BaseComponent<'div'> {
     });
 
     this.newCarButton = tag.button({
-      classes: [styles.newCarButton, styles.strippedButton, 'button'],
+      classes: [styles.strippedButton, 'button'],
       text: 'New Hell Truck',
       onclick: () => this.addCar(),
     });

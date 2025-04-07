@@ -29,7 +29,7 @@ export default class Page extends BaseComponent<'main'> {
 
     this.winnersButton = tag.button(
       {
-        classes: [styles.viewButton, styles.toWinners, styles.active, 'button'],
+        classes: [styles.viewButton, styles.active, 'button'],
         onclick: () => this.triggerViewChange('winners'),
       },
       tag.div({ classes: [styles.buttonText], text: 'winners >>' })
@@ -37,7 +37,7 @@ export default class Page extends BaseComponent<'main'> {
 
     this.garageButton = tag.button(
       {
-        classes: [styles.viewButton, styles.toGarage, 'button'],
+        classes: [styles.viewButton, 'button'],
         onclick: () => this.triggerViewChange('garage'),
       },
       tag.div({ classes: [styles.buttonText], text: '<< garage' })
