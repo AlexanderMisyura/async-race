@@ -28,6 +28,9 @@ class Controller extends Loader {
       });
     } catch (error) {
       if (error instanceof Error && error.message.includes('404')) {
+        console.log(
+          'The winning car was not found on the winners list and will be added there.'
+        );
         return await this.createWinner({
           id: body.id,
           time: body.time,
@@ -59,7 +62,7 @@ class Controller extends Loader {
       try {
         await super.deleteWinner(id);
       } catch {
-        console.log('Car was not found in the winners list.');
+        console.log('Deleted car was not found in the winners list.');
       }
       return await super.deleteCar(id);
     } catch (error) {
