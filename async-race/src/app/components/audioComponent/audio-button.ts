@@ -34,6 +34,6 @@ export default class AudioButton extends BaseComponent<'button'> {
   }
 
   private pause(): void {
-    audioController.pauseTrack();
+    audioController.stopTrack();
   }
 }
