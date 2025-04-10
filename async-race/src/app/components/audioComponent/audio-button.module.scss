@@ -1,5 +1,14 @@
+@use './animation.scss' as *;
+
 .audioButton {
   inline-size: 30px;
   block-size: 30px;
   padding: 0;
+}
+
+.active {
+  svg {
+    color: crimson;
+    animation: shimmer 10s infinite;
+  }
 }

@@ -22,15 +22,15 @@ export default class AudioButton extends BaseComponent<'button'> {
   private handleClick(): void {
     if (audioController.isPlaying) {
       this.pause();
-      this.guitarSvg.style.color = 'black';
+      this.removeClasses(styles.active);
     } else {
       this.play();
-      this.guitarSvg.style.color = 'red';
+      this.addClasses(styles.active);
     }
   }
 
   private play(): void {
-    audioController.playCurrentTrack();
+    audioController.playRandomTrack();
   }
 
   private pause(): void {
