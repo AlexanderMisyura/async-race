@@ -105,6 +105,10 @@
   background-image: url('../../assets/img/fire-border.png');
   background-repeat: no-repeat;
   background-size: 100% 100%;
+
+  svg {
+    animation: blink 1s infinite;
+  }
 }
 
 .raceActive {
