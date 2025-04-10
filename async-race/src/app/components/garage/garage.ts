@@ -14,6 +14,7 @@ import * as styles from './garage.module.scss';
 
 const INITIAL_CARS_TOTAL = 0;
 const DEFAULT_NON_SELECTED_CAR_COLOR = '#ffffff';
+const RESET_TIMEOUT = 2000;
 
 export default class Garage extends BaseComponent<'div'> {
   private raceContainer: BaseComponent<'div'>;
@@ -113,16 +114,10 @@ export default class Garage extends BaseComponent<'div'> {
         break;
       }
       case 'startCar': {
-        this.newCarButton?.getElement().setAttribute('disabled', '');
-        this.generateButton?.getElement().setAttribute('disabled', '');
+        this.disableButtons();
+        this.resetSelectedCar();
         this.resetAllButton?.getElement().removeAttribute('disabled');
-        this.startAllButton?.getElement().setAttribute('disabled', '');
-
         this.updateData(carsPageNumber, carsPerPage, carsTotal, pageCars);
-
-        if (contextData?.car?.id === this.selectedCar?.id) {
-          this.resetSelectedCar();
-        }
         break;
       }
       case 'initialize':
@@ -135,12 +130,22 @@ export default class Garage extends BaseComponent<'div'> {
       }
       case 'finishRace': {
         this.resetAllButton?.getElement().removeAttribute('disabled');
-        this.updateNavigation();
         break;
       }
       case 'checkDriveSuccess': {
         if (this.pageCars.every((car) => car.driveSuccess === false)) {
           this.resetAllButton?.getElement().removeAttribute('disabled');
+        }
+
+        if (
+          this.pageCars.every(
+            (car) =>
+              car.driveSuccess !== undefined || car.status === CarStatus.STOPPED
+          )
+        ) {
+          setTimeout(() => {
+            this.updateNavigation();
+          }, RESET_TIMEOUT);
         }
 
         break;
@@ -166,15 +171,19 @@ export default class Garage extends BaseComponent<'div'> {
     const areCarsReady = this.pageCars.every((car) => {
       return car.status === CarStatus.STOPPED;
     });
+
     if (areCarsReady) {
-      this.enableButtons();
-      for (const car of this.raceContainer.childComponents) {
-        if (car instanceof CarTrack) {
-          car.enableControls();
+      setTimeout(() => {
+        this.enableButtons();
+
+        for (const car of this.raceContainer.childComponents) {
+          if (car instanceof CarTrack) {
+            car.enableControls();
+          }
         }
-      }
+      }, RESET_TIMEOUT);
+
       this.resetAllButton?.getElement().setAttribute('disabled', '');
-      this.startAllButton?.getElement().removeAttribute('disabled');
       void machine.makeTransition(machine.value, 'resetToIdle');
     }
   }

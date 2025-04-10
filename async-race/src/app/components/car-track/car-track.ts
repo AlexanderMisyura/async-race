@@ -12,6 +12,8 @@ import flagSvg from '../../assets/img/flag.svg';
 import racerSvg from '../../assets/img/monster-truck.svg';
 import * as styles from './car-track.module.scss';
 
+const RESET_TIMEOUT = 2000;
+
 export default class CarTrack extends BaseComponent {
   public boundUnSelect: (car: Car | boolean) => void;
   private selectButton: BaseComponent<'button'> | undefined;
@@ -248,7 +250,9 @@ export default class CarTrack extends BaseComponent {
   private handleResetCar(context: Context): void {
     if (this.startButton && this.stopButton) {
       if (machine.value !== 'state:race' && machine.value !== 'state:finish') {
-        this.startButton.getElement().removeAttribute('disabled');
+        setTimeout(() => {
+          this.startButton?.getElement().removeAttribute('disabled');
+        }, RESET_TIMEOUT);
       }
       this.stopButton.getElement().setAttribute('disabled', '');
       this.startButton.addClasses(styles.active);
