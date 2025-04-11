@@ -225,9 +225,9 @@ export default class Garage extends BaseComponent<'div'> {
 
   private createGenerateButton(): BaseComponent<'button'> {
     return tag.button({
-      classes: [styles.stripedButton, 'button'],
+      classes: [styles.highlightedButton, 'button'],
       text: 'Generate 100 Hell Trucks',
-      title: "Yeah, they're very ordinary, but they're kinda cool too",
+      title: "More Hell Trucks! Don't worry about them burning in hellfire.",
       onclick: () => void machine.makeTransition(machine.value, 'addBulkCars'),
     });
   }
@@ -371,8 +371,10 @@ export default class Garage extends BaseComponent<'div'> {
     const labelInputNew = this.createLabelInputNew();
 
     this.newCarButton = tag.button({
-      classes: [styles.stripedButton, 'button'],
+      classes: [styles.highlightedButton, 'button'],
       text: 'New Hell Truck',
+      title:
+        'Shiny new Hell Truck. Maybe this is the one that will bring you glory.',
       onclick: () => this.addCar(),
     });
 
