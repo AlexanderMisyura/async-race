@@ -12,6 +12,7 @@ export default class AudioButton extends BaseComponent<'button'> {
     super({
       elementTag: 'button',
       classes: [styles.audioButton, 'button'],
+      title: 'Play hell metal',
     });
 
     this.getElement().append(this.guitarSvg);
